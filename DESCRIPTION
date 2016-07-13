@@ -1,0 +1,11 @@
+Package: credentials
+Title: Asks for credentials without exposing plain text passwords
+Version: 0.0.0.9000
+Authors@R: person("Matt", "Pollock", email = "mpollock@mitre.org", role = c("aut", "cre"))
+Description: This package asks for passwords.
+Depends:
+    R (>= 3.0.0)
+License: MITRE
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 5.0.1
