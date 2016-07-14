@@ -1,6 +1,8 @@
 #' @rdname get_credentials
 #' @export
 get_credentials_via_shiny <- function(prompt="", username=guess_user(), toggle_cache=TRUE) {
+  check_interactive()
+  
   require(shiny)
   require(miniUI)
   
@@ -37,18 +39,18 @@ get_credentials_via_shiny <- function(prompt="", username=guess_user(), toggle_c
   viewer <- paneViewer(300)
   ans <- runGadget(ui, server, viewer=viewer)
   if (is.null(ans[["password"]]))
-    stop("Unable to complete request without valid credentials")
+    stop("Process stopped due to canceled password entry")
   if (!toggle_cache)
     ans["cache_pw"] <- NULL
   return(ans)
 }
 
 #' @export
-#' @rdname get_credentialing_options
+#' @rdname list_credentialing_options
 is_shiny_credentialing_available <- function() {
   
   # need to be using some GUI
-  if (!(.Platform$GUI %in% c("Rgui", "RStudio"))) {
+  if (!has_gui()) {
     return(FALSE)
   }
   
@@ -67,7 +69,7 @@ is_shiny_credentialing_available <- function() {
 }
 
 #' @export
-#' @rdname get_credentialing_options
+#' @rdname list_credentialing_options
 #' @section Shiny:
 #' Shiny credentialing depends on both the \code{shiny} and \code{miniUI} packages being available.
 #' It also requires that \code{R} is being run using a GUI (e.g., not on the command line). Shiny
@@ -77,7 +79,7 @@ is_shiny_credentialing_available <- function() {
 #' cache password checkbox and is also the only option where the user can modify the user name input
 #' after the function is called.
 is_shiny_credentialing_recommended <- function() {
-  if (is_shiny_credentialing_available() && .Platform$GUI=="RStudio")
+  if (is_shiny_credentialing_available() && get_gui()=="RStudio")
     return(TRUE)
   return(FALSE)
 }

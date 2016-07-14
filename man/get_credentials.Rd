@@ -9,20 +9,50 @@
 \title{Get credentials}
 \usage{
 get_credentials(prompt = "", username = guess_user(), toggle_cache = TRUE,
-  method)
+  preferences = get_recommended_credentialer())
 
-get_credentials_via_readline(prompt = "", username = "mpollock")
+get_credentials_via_readline(prompt = "", username = guess_user(),
+  plain_text = FALSE, toggle_cache = TRUE)
 
-get_credentials_via_rstudioapi(prompt = "", username = guess_user())
+get_credentials_via_rstudioapi(prompt = "", username = guess_user(),
+  toggle_cache = TRUE)
 
 get_credentials_via_shiny(prompt = "", username = guess_user(),
   toggle_cache = TRUE)
 
-get_credentials_via_tcltk(prompt = "", username = guess_user())
+get_credentials_via_tcltk(prompt = "", username = guess_user(),
+  toggle_cache = TRUE)
+}
+\arguments{
+\item{prompt}{Character. A prompt justifying why a user ought to provide a password, or
+perhaps indicating what the password is needed for.}
+
+\item{username}{Character. The username that will be used in conjunction with the provided
+password}
+
+\item{toggle_cache}{Logical. Used only in the \code{shiny} option, it enables packages to
+be friendly about whether users would like to have their passwords cached to avoid reentry
+(e.g., if the same system is going to be connected several times) or if they would prefer
+to be asked each time.}
+
+\item{preferences}{Character. An ordered list of preferred credentialing options. The first
+option on the list that is functional on the user's system will be used. Note that in the
+event that none of the preferred options is available on a user's system, then all 
+available options (per \code{\link{list_credentialing_options}}) will be tried even though
+they may not appear on the preferences list.}
+
+\item{plain_text}{Logical. Available only for the \code{readline} option only, this allows a password
+to be entered in plain text on the console. This is generally a bad and avoidable option.
+It exists as a method of last resort for those who don't care about security.}
 }
 \description{
 This function provides several options for ways in which user credentials (i.e., a
 user name and password) may be collected in R. The intent here is for use cases where
 some sort of authentiation is necessary within R, such as database connection credentials.
+}
+\details{
+Generally \code{get_credentials} is a better choice for packages to use than one of the
+specific credential getters. The order in which options are considered is controllable
+via the \code{preferences} argument, but there are safeguards adapt to the urser's system.
 }
 
