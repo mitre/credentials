@@ -1,14 +1,10 @@
----
-output: 
-  html_document:
-    keep_md: true
----
 
 A package to simplify gathering credentials from a user.
 
 ## Installation
 
-```{r, eval=FALSE}       
+
+```r
 # install.packages("devtools")
 devtools::install_github("mitre/credentials")
 ```
@@ -29,40 +25,30 @@ There are currnetly four credentialing options:
 
 `get_credentials_via_shiny()` uses a shiny app to ask for credentials. This is the default whenever `R` is being run from RStudio. It is also available for from R GUI though it is not the default because it opens the app in a browser in that case.
 
-```{r, out.width=650, echo=FALSE}
-knitr::include_graphics("./screen_caps/rstudio_shiny.png")
-```
+<img src="./screen_caps/rstudio_shiny.png" width="650" />
 
 ### rstudioapi
 
 Another approach is to use the `rstudioapi` package with `get_credentials_via_rstudioapi()`. This option is only available if `R` is running from RStudio and is never the default recommended approach unless the `CRAN` packages (`shiny` and `miniUI`) necessary for the `shiny`-based approach are not installed. It is a little bit faster than the `shiny` approach, but since we are talking about humans typing inpu there the speed difference is negligable. 
 
-```{r, out.width=650, echo=FALSE}
-knitr::include_graphics("./screen_caps/rstudio_rstudioapi.png")
-```
+<img src="./screen_caps/rstudio_rstudioapi.png" width="650" />
 
 ### tcltk
 
 The third option is using `tcltk`. This requires that `R` was compiled with `tcltk` and that the `tcltk` package is installed. It is also necessary to be running R with an available display. One tricky corner-case here is with RStudio Server, which does not work well with `tcltk`.
 
 With RStudio (desktop) it looks like:
-```{r, out.width=650, echo=FALSE}
-knitr::include_graphics("./screen_caps/rstudio_tcltk.png")
-```
+<img src="./screen_caps/rstudio_tcltk.png" width="650" />
 
 When running with R GUI you will get something like:
 With RStudio (desktop) it looks like:
-```{r, out.width=650, echo=FALSE}
-knitr::include_graphics("./screen_caps/rgui_tcltk.png")
-```
+<img src="./screen_caps/rgui_tcltk.png" width="650" />
 
 ### readline
 
 Finally, `readline` is a perfectly good option so long as one can suppress the echoing of text typed on the console. For this reason it is generally reserved as a good option for `R` run on the command line
 
-```{r, out.width=650, echo=FALSE}
-knitr::include_graphics("./screen_caps/cmdr_readline.png")
-```
+<img src="./screen_caps/cmdr_readline.png" width="650" />
 
 
 ## Package Dependencies

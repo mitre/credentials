@@ -82,26 +82,26 @@ devtools::<span class="kw">install_github</span>(<span class="st">"mitre/credent
 <h3 class="hasAnchor">
 <a href="#shiny-miniui" class="anchor"></a>Shiny + miniUI</h3>
 <p><code><a href="reference/get_credentials.html">get_credentials_via_shiny()</a></code> uses a shiny app to ask for credentials. This is the default whenever <code>R</code> is being run from RStudio. It is also available for from R GUI though it is not the default because it opens the app in a browser in that case.</p>
-<p><img src="./screen_caps/rstudio_shiny.png" width="650"></p>
+<p><img src="screen_caps/rstudio_shiny.png" width="650"></p>
 </div>
 <div id="rstudioapi" class="section level3">
 <h3 class="hasAnchor">
 <a href="#rstudioapi" class="anchor"></a>rstudioapi</h3>
 <p>Another approach is to use the <code>rstudioapi</code> package with <code><a href="reference/get_credentials.html">get_credentials_via_rstudioapi()</a></code>. This option is only available if <code>R</code> is running from RStudio and is never the default recommended approach unless the <code>CRAN</code> packages (<code>shiny</code> and <code>miniUI</code>) necessary for the <code>shiny</code>-based approach are not installed. It is a little bit faster than the <code>shiny</code> approach, but since we are talking about humans typing inpu there the speed difference is negligable.</p>
-<p><img src="./screen_caps/rstudio_rstudioapi.png" width="650"></p>
+<p><img src="screen_caps/rstudio_rstudioapi.png" width="650"></p>
 </div>
 <div id="tcltk" class="section level3">
 <h3 class="hasAnchor">
 <a href="#tcltk" class="anchor"></a>tcltk</h3>
 <p>The third option is using <code>tcltk</code>. This requires that <code>R</code> was compiled with <code>tcltk</code> and that the <code>tcltk</code> package is installed. It is also necessary to be running R with an available display. One tricky corner-case here is with RStudio Server, which does not work well with <code>tcltk</code>.</p>
-<p>With RStudio (desktop) it looks like: <img src="./screen_caps/rstudio_tcltk.png" width="650"></p>
-<p>When running with R GUI you will get something like: With RStudio (desktop) it looks like: <img src="./screen_caps/rgui_tcltk.png" width="650"></p>
+<p>With RStudio (desktop) it looks like: <img src="screen_caps/rstudio_tcltk.png" width="650"></p>
+<p>When running with R GUI you will get something like: With RStudio (desktop) it looks like: <img src="screen_caps/rgui_tcltk.png" width="650"></p>
 </div>
 <div id="readline" class="section level3">
 <h3 class="hasAnchor">
 <a href="#readline" class="anchor"></a>readline</h3>
 <p>Finally, <code>readline</code> is a perfectly good option so long as one can suppress the echoing of text typed on the console. For this reason it is generally reserved as a good option for <code>R</code> run on the command line</p>
-<p><img src="./screen_caps/cmdr_readline.png" width="650"></p>
+<p><img src="screen_caps/cmdr_readline.png" width="650"></p>
 </div>
 </div>
 <div id="package-dependencies" class="section level2">
