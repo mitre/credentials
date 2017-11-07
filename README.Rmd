@@ -1,0 +1,15 @@
+A package to simplify gathering credentials from a user.
+
+## Use
+
+The best way to ask for user credentials depends on the way in which the user is running R.
+For example, `readline` with hidden input works fine for users working in a terminal, but users of RStudio will have better luck using the RStudio API or a mini Shiny app.
+This package provides a layer of abstraction between package authors needing to collect credentials and user who have different preferences about how to use R.
+The package will interrogate the users R session to determine the best approach for collecting credentials, do the collection, and return the result to the caller in a consistent list structure.
+
+## Installation
+
+```{r, eval=FALSE}       
+# install.packages("devtools")
+devtools::install_github("mitre/credentials")
+```
