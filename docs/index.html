@@ -62,16 +62,52 @@
     
 <div class="contents">
 <p>A package to simplify gathering credentials from a user.</p>
-<div id="use" class="section level2">
-<h2 class="hasAnchor">
-<a href="#use" class="anchor"></a>Use</h2>
-<p>The best way to ask for user credentials depends on the way in which the user is running R. For example, <code>readline</code> with hidden input works fine for users working in a terminal, but users of RStudio will have better luck using the RStudio API or a mini Shiny app. This package provides a layer of abstraction between package authors needing to collect credentials and user who have different preferences about how to use R. The package will interrogate the users R session to determine the best approach for collecting credentials, do the collection, and return the result to the caller in a consistent list structure.</p>
-</div>
 <div id="installation" class="section level2">
 <h2 class="hasAnchor">
 <a href="#installation" class="anchor"></a>Installation</h2>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r"><span class="co"># install.packages("devtools")</span>
 devtools::<span class="kw">install_github</span>(<span class="st">"mitre/credentials"</span>)</code></pre></div>
+</div>
+<div id="use" class="section level2">
+<h2 class="hasAnchor">
+<a href="#use" class="anchor"></a>Use</h2>
+<p>Asking for user credentials in <code>R</code> is tricky because <code>R</code> can be run in many different ways. There are interactive and non-interactive <code>R</code> sessions. <code>R</code> can be run in text mode on a terminal, with RStudio, or using the R GUI. The displays available vary as do the system libraries <code>R</code> may or may not be compiled with. The packages that any given <code>R</code> user has installed are likely to differ. With any given set of the above options each credentialing system may or may not work. No credentialing option that prevents a plain-text password from being passed to a function or typed into the console works in every <code>R</code> environment.</p>
+<p>The <code>credentials</code> package approaches this problem by accepting that no one-size-fits all solution exists, so the next best thing is the figure out which solution will work in any given situation. This package provides a layer of abstraction between package authors needing to collect credentials and user who have different preferences about how to use R. The package will interrogate the users R session to determine the best approach for collecting credentials, do the collection, and return the result to the caller in a consistent list structure.</p>
+</div>
+<div id="credentialing-options" class="section level2">
+<h2 class="hasAnchor">
+<a href="#credentialing-options" class="anchor"></a>Credentialing Options</h2>
+<p>There are currnetly four credentialing options:</p>
+<div id="shiny-miniui" class="section level3">
+<h3 class="hasAnchor">
+<a href="#shiny-miniui" class="anchor"></a>Shiny + miniUI</h3>
+<p><code><a href="reference/get_credentials.html">get_credentials_via_shiny()</a></code> uses a shiny app to ask for credentials. This is the default whenever <code>R</code> is being run from RStudio. It is also available for from R GUI though it is not the default because it opens the app in a browser in that case.</p>
+<p><img src="./screen_caps/rstudio_shiny.png" width="650"></p>
+</div>
+<div id="rstudioapi" class="section level3">
+<h3 class="hasAnchor">
+<a href="#rstudioapi" class="anchor"></a>rstudioapi</h3>
+<p>Another approach is to use the <code>rstudioapi</code> package with <code><a href="reference/get_credentials.html">get_credentials_via_rstudioapi()</a></code>. This option is only available if <code>R</code> is running from RStudio and is never the default recommended approach unless the <code>CRAN</code> packages (<code>shiny</code> and <code>miniUI</code>) necessary for the <code>shiny</code>-based approach are not installed. It is a little bit faster than the <code>shiny</code> approach, but since we are talking about humans typing inpu there the speed difference is negligable.</p>
+<p><img src="./screen_caps/rstudio_rstudioapi.png" width="650"></p>
+</div>
+<div id="tcltk" class="section level3">
+<h3 class="hasAnchor">
+<a href="#tcltk" class="anchor"></a>tcltk</h3>
+<p>The third option is using <code>tcltk</code>. This requires that <code>R</code> was compiled with <code>tcltk</code> and that the <code>tcltk</code> package is installed. It is also necessary to be running R with an available display. One tricky corner-case here is with RStudio Server, which does not work well with <code>tcltk</code>.</p>
+<p>With RStudio (desktop) it looks like: <img src="./screen_caps/rstudio_tcltk.png" width="650"></p>
+<p>When running with R GUI you will get something like: With RStudio (desktop) it looks like: <img src="./screen_caps/rgui_tcltk.png" width="650"></p>
+</div>
+<div id="readline" class="section level3">
+<h3 class="hasAnchor">
+<a href="#readline" class="anchor"></a>readline</h3>
+<p>Finally, <code>readline</code> is a perfectly good option so long as one can suppress the echoing of text typed on the console. For this reason it is generally reserved as a good option for <code>R</code> run on the command line</p>
+<p><img src="./screen_caps/cmdr_readline.png" width="650"></p>
+</div>
+</div>
+<div id="package-dependencies" class="section level2">
+<h2 class="hasAnchor">
+<a href="#package-dependencies" class="anchor"></a>Package Dependencies</h2>
+<p>The <code>credentials</code> package does not declare any dependencies on purpose. This avoids situations where, for example, people who always use <code>R</code> on the command line would be compelled to install the <code>shiny</code> package when a <code>readline</code>-based solution with echoing turned off would be sufficient. Furthermore, the package is really intended to be used by other packages, not directly from the console. As such it is reasonable to punt to the parent package to declare whatever dependencies the package authors desire. Thus, for example, if <code>tcltk</code> is the preference of a given package author, he or she may declare a <code>tcltk</code> dependency and specify that as a preferred method when calling <code><a href="reference/get_credentials.html">get_credentials()</a></code> to ensure that <code>tcltk</code> will be used whenever possible.</p>
 </div>
 </div>
   </div>
